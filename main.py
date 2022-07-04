@@ -23,5 +23,14 @@ def recipe_reader(book):
         return cook_book
 
 
-cook_buk = recipe_reader(data)
-pprint(cook_buk, indent=1, width=120, depth=3, sort_dicts=False)
+def get_shop_list_by_dishes(dishes, person_count):
+    shop_list = {}
+    cook_book = recipe_reader(data)
+    for dish in dishes:
+        for item in cook_book.get(dish):
+            shop_list.setdefault(item.get('ingredient_name'), {'measure': item.get('measure'), 'quantity': int(item.get('quantity')) * int(person_count)})
+    return shop_list
+
+
+pprint(recipe_reader(data), indent=1, width=120, depth=3, sort_dicts=False)
+pprint(get_shop_list_by_dishes(['Фахитос', 'Омлет'], 2))
